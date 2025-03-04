@@ -14,8 +14,9 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Briefcase } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
 import { authClient } from '@/lib/auth-client';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 const loginSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email address' }),
@@ -31,8 +32,8 @@ interface LoginProps {
 const { signIn } = authClient;
 
 export default function Login({ onLogin }: LoginProps) {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const { toast } = useToast();
 
   const {
     register,
@@ -65,20 +66,13 @@ export default function Login({ onLogin }: LoginProps) {
           setIsLoading(true);
         },
         onError: (ctx) => {
-          toast({
-            title: 'Error!',
-            description: ctx.error.message,
-            variant: 'destructive',
-          });
+          toast(ctx.error.message);
         },
         onSuccess: async (data) => {
           console.log('Logged in', data);
           localStorage.setItem('authToken', data.data.token);
           localStorage.setItem('userEmail', email);
-          toast({
-            title: 'Login successful',
-            description: 'Welcome back to JobHunter!',
-          });
+          toast('Login successful');
           onLogin();
         },
       },
@@ -168,7 +162,14 @@ export default function Login({ onLogin }: LoginProps) {
             </Button>
             <p className="mt-4 text-center text-sm text-muted-foreground">
               Don't have an account?{' '}
-              <Button variant="link" className="h-auto p-0">
+              <Button
+                type="button"
+                onClick={() => {
+                  navigate('/register');
+                }}
+                variant="link"
+                className="h-auto p-0"
+              >
                 Sign up
               </Button>
             </p>

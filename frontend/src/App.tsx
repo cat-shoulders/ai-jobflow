@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from '@/components/theme-provider';
-import { Toaster } from '@/components/ui/toaster';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
 import Dashboard from '@/pages/Dashboard';
@@ -8,13 +7,18 @@ import JobApplications from '@/pages/JobApplications';
 import Profile from '@/pages/Profile';
 import Layout from '@/components/Layout';
 import AddApplication from '@/pages/AddApplication';
-import { authClient } from '@/lib/auth-client.ts';
+import { authClient } from '@/lib/auth-client';
+import { Toaster } from '@/components/ui/sonner';
 
 function App() {
   const { data: userData, error, isPending } = authClient.useSession();
 
   if (isPending) {
-    return <div>Loading...</div>;
+    return (
+      <div className="w-screen flex min-h-screen items-center justify-center bg-background p-4">
+        <div>Loading...</div>
+      </div>
+    );
   }
 
   if (error) {
@@ -24,6 +28,7 @@ function App() {
   const handleLogin = () => {};
 
   const handleLogout = () => {
+    authClient.signOut();
     localStorage.removeItem('authToken');
   };
 
