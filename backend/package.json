@@ -2,9 +2,9 @@
   "name": "ai-job-processor-backend",
   "license": "MIT",
   "scripts": {
-    "dev": "PORT=5001 bun run main.ts --watch",
+    "dev": "PORT=5001 bun run src/main.ts --watch",
+    "start": "bun run src/main.ts",
     "build": "tsc",
-    "start": "bun run src/index.ts",
     "prettier": "prettier . --write"
   },
   "dependencies": {
