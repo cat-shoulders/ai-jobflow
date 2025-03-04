@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/card';
 import { Briefcase } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import * as conf from '@/conf';
 
 const loginSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email address' }),
@@ -54,7 +55,7 @@ export default function Login({ onLogin }: LoginProps) {
     setIsLoading(true);
 
     try {
-      const response = await fetch(import.meta.env.VITE_API_URL + '/api/login', {
+      const response = await fetch(conf.API_URL + '/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

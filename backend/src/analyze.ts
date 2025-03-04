@@ -57,7 +57,7 @@ export async function analyze(context: Context) {
       return context.json({ error: 'Please enter job description and resume' }, 400);
     }
 
-    const criteriaPath = path.join(process.cwd(), 'data', 'trainings');
+    const criteriaPath = path.join(__dirname, 'data', 'trainings');
     const categories = await fs.readdir(criteriaPath);
 
     const criteriaData: Category[] = [];

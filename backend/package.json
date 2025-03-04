@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "PORT=5001 bun run src/main.ts --watch",
     "start": "bun run src/main.ts",
-    "build": "tsc",
+    "build": "tsc && cp -r src/data dist",
     "prettier": "prettier . --write"
   },
   "dependencies": {
