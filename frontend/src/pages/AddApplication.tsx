@@ -24,6 +24,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.t
 import type { CategoryResult } from '@/types/analysis';
 import { JobDescriptionPanel } from '@/components/JobDescriptionPanel';
 import { AnalysisResults } from '@/components/AnalysisResults';
+import * as conf from '@/conf';
 
 const EditorComp = lazy(() => import('../components/EditorComponent'));
 
@@ -96,7 +97,7 @@ export default function AddApplication() {
     setAnalyzing(true);
     try {
       const authToken = localStorage.getItem('authToken');
-      const res = await fetch(import.meta.env.VITE_API_URL + '/api/analyze', {
+      const res = await fetch(conf.API_URL + '/api/analyze', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
