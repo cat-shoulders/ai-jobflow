@@ -28,8 +28,8 @@ export function PDFViewer({
   const [numPages, setNumPages] = useState<number>(0);
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [scale, setScale] = useState<number>(1.0);
-  const [firstParagraph, setFirstParagraph] = useState<string>('');
-  const [tooltipPosition, setTooltipPosition] = useState<{
+  const [_firstParagraph, setFirstParagraph] = useState<string>('');
+  const [_tooltipPosition, setTooltipPosition] = useState<{
     x: number;
     y: number;
   } | null>(null);
@@ -56,7 +56,7 @@ export function PDFViewer({
         console.log('==text', text);
         const pageText = text.items
           .map((s) => {
-            return s.str;
+            return 'str' in s ? s.str : '';
           })
           .join('\n');
 
