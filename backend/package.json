@@ -1,0 +1,22 @@
+{
+  "name": "backend",
+  "license": "MIT",
+  "scripts": {
+    "dev": "PORT=5001 bun run main.ts --watch",
+    "build": "bun build",
+    "start": "bun run src/index.ts"
+  },
+  "dependencies": {
+    "hono": "^4.2.4",
+    "@ai-sdk/google": "^1.1.16",
+    "@types/ejs": "^3.1.5",
+    "ai": "^4.1.45",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "ejs": "^3.1.10",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.0.12"
+  }
+}
