@@ -3,7 +3,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "PORT=5001 bun run main.ts --watch",
-    "build": "bun build",
+    "build": "tsc",
     "start": "bun run src/index.ts",
     "prettier": "prettier . --write"
   },

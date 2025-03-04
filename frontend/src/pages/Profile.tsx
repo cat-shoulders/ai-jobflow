@@ -58,7 +58,7 @@ export default function Profile() {
     },
   });
 
-  const onSubmit = (data: ProfileFormValues) => {
+  const onSubmit = (_data: ProfileFormValues) => {
     // In a real app, you would save this data to your backend
     toast({
       title: 'Profile updated',

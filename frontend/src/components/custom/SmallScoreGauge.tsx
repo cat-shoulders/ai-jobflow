@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface SmallScoreGaugeProps {
   score: number;
   className?: string;
