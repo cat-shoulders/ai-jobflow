@@ -7,26 +7,24 @@ import {
   TableCell,
   TableHead,
   TableHeader,
-  TableRow
+  TableRow,
 } from '@/components/ui/table';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger
+  DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import {
-  Badge,
-} from '@/components/ui/badge';
+import { Badge } from '@/components/ui/badge';
 import {
   CheckCircle,
   Clock,
   MoreHorizontal,
   Plus,
   Search,
-  XCircle
+  XCircle,
 } from 'lucide-react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 // Sample data
 const applications = [
@@ -98,13 +96,38 @@ const applications = [
 const getStatusBadge = (status: string) => {
   switch (status) {
     case 'applied':
-      return <Badge variant="outline" className="flex items-center gap-1"><Clock className="h-3 w-3" /> Applied</Badge>;
+      return (
+        <Badge variant="outline" className="flex items-center gap-1">
+          <Clock className="h-3 w-3" /> Applied
+        </Badge>
+      );
     case 'interview':
-      return <Badge variant="outline" className="flex items-center gap-1 text-blue-500 border-blue-500"><Clock className="h-3 w-3" /> Interview</Badge>;
+      return (
+        <Badge
+          variant="outline"
+          className="flex items-center gap-1 text-blue-500 border-blue-500"
+        >
+          <Clock className="h-3 w-3" /> Interview
+        </Badge>
+      );
     case 'offer':
-      return <Badge variant="outline" className="flex items-center gap-1 text-green-500 border-green-500"><CheckCircle className="h-3 w-3" /> Offer</Badge>;
+      return (
+        <Badge
+          variant="outline"
+          className="flex items-center gap-1 text-green-500 border-green-500"
+        >
+          <CheckCircle className="h-3 w-3" /> Offer
+        </Badge>
+      );
     case 'rejected':
-      return <Badge variant="outline" className="flex items-center gap-1 text-red-500 border-red-500"><XCircle className="h-3 w-3" /> Rejected</Badge>;
+      return (
+        <Badge
+          variant="outline"
+          className="flex items-center gap-1 text-red-500 border-red-500"
+        >
+          <XCircle className="h-3 w-3" /> Rejected
+        </Badge>
+      );
     default:
       return <Badge variant="outline">Unknown</Badge>;
   }
@@ -114,10 +137,11 @@ export default function JobApplications() {
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
 
-  const filteredApplications = applications.filter(app =>
-    app.company.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    app.position.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    app.location.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredApplications = applications.filter(
+    (app) =>
+      app.company.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      app.position.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      app.location.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   return (
@@ -129,7 +153,10 @@ export default function JobApplications() {
             Manage and track your job applications
           </p>
         </div>
-        <Button onClick={() => navigate('/applications/add')} className="flex items-center gap-2">
+        <Button
+          onClick={() => navigate('/applications/add')}
+          className="flex items-center gap-2"
+        >
           <Plus className="h-4 w-4" />
           Add Application
         </Button>
@@ -186,7 +213,10 @@ export default function JobApplications() {
           <TableBody>
             {filteredApplications.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
+                <TableCell
+                  colSpan={7}
+                  className="text-center py-8 text-muted-foreground"
+                >
                   No applications found. Try adjusting your search.
                 </TableCell>
               </TableRow>
@@ -209,7 +239,9 @@ export default function JobApplications() {
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem>View Details</DropdownMenuItem>
                         <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
+                        <DropdownMenuItem className="text-destructive">
+                          Delete
+                        </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>

@@ -1,11 +1,18 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Briefcase } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
@@ -38,7 +45,7 @@ export default function Login({ onLogin }: LoginProps) {
 
   useEffect(() => {
     if (localStorage.getItem('authToken')) {
-      console.log("Logged in", localStorage.getItem('authToken'));
+      console.log('Logged in', localStorage.getItem('authToken'));
       onLogin();
     }
   }, [onLogin]);
@@ -47,19 +54,19 @@ export default function Login({ onLogin }: LoginProps) {
     setIsLoading(true);
 
     try {
-      const response = await fetch(import.meta.env.VITE_API_URL + "/api/login", {
-        method: "POST",
+      const response = await fetch(import.meta.env.VITE_API_URL + '/api/login', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password}),
+        body: JSON.stringify({ email, password }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        localStorage.setItem("authToken", data.token);
-        localStorage.setItem("userEmail", email);
+        localStorage.setItem('authToken', data.token);
+        localStorage.setItem('userEmail', email);
         toast({
           title: 'Login successful',
           description: 'Welcome back to JobHunter!',
@@ -68,14 +75,14 @@ export default function Login({ onLogin }: LoginProps) {
       } else {
         toast({
           title: 'Login failed',
-          description: data.message || "Login failed",
+          description: data.message || 'Login failed',
         });
       }
     } catch (e) {
       toast({
         title: 'Error!',
         description: 'An error occurred. Please try again.',
-        variant: 'destructive'
+        variant: 'destructive',
       });
       console.error(e);
     } finally {
@@ -116,11 +123,7 @@ export default function Login({ onLogin }: LoginProps) {
                 {/*  Forgot password?*/}
                 {/*</Button>*/}
               </div>
-              <Input
-                id="password"
-                type="password"
-                {...register('password')}
-              />
+              <Input id="password" type="password" {...register('password')} />
               {errors.password && (
                 <p className="text-sm text-destructive">{errors.password.message}</p>
               )}

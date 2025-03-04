@@ -7,7 +7,7 @@ import {
   Briefcase,
   User,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -39,8 +39,8 @@ export default function Sidebar({ open, onToggle }: SidebarProps) {
   return (
     <div
       className={cn(
-        "flex flex-col border-r bg-card transition-all duration-300",
-        open ? "w-64" : "w-[70px]"
+        'flex flex-col border-r bg-card transition-all duration-300',
+        open ? 'w-64' : 'w-[70px]',
       )}
     >
       <div className="flex h-14 items-center px-4 border-b">
@@ -62,10 +62,10 @@ export default function Sidebar({ open, onToggle }: SidebarProps) {
                   key={item.href}
                   to={item.href}
                   className={cn(
-                    "flex items-center gap-3 text-accent-foreground rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                    'flex items-center gap-3 text-accent-foreground rounded-md px-3 py-2 text-sm font-medium transition-colors',
                     location.pathname === item.href
-                      ? "bg-accent text-blue-600 dark:text-blue-400"
-                      : "hover:bg-accent hover:text-accent-foreground"
+                      ? 'bg-accent text-blue-600 dark:text-blue-400'
+                      : 'hover:bg-accent hover:text-accent-foreground',
                   )}
                 >
                   {item.icon}
@@ -83,7 +83,11 @@ export default function Sidebar({ open, onToggle }: SidebarProps) {
           onClick={onToggle}
           className="w-full flex justify-center"
         >
-          {open ? <ChevronLeft className="h-5 w-5" /> : <ChevronRight className="h-5 w-5" />}
+          {open ? (
+            <ChevronLeft className="h-5 w-5" />
+          ) : (
+            <ChevronRight className="h-5 w-5" />
+          )}
         </Button>
       </div>
     </div>

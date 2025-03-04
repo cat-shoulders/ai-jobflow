@@ -11,4 +11,4 @@ export function Gauge({ value }: GaugeProps) {
       ></div>
     </div>
   );
-} 
+}

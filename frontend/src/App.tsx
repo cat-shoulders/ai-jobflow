@@ -7,10 +7,12 @@ import Dashboard from '@/pages/Dashboard';
 import JobApplications from '@/pages/JobApplications';
 import Profile from '@/pages/Profile';
 import Layout from '@/components/Layout';
-import AddApplication from "@/pages/AddApplication";
+import AddApplication from '@/pages/AddApplication';
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem('authToken') !== null);
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    localStorage.getItem('authToken') !== null,
+  );
 
   const handleLogin = () => {
     setIsAuthenticated(true);
@@ -28,17 +30,21 @@ function App() {
           <Route
             path="/login"
             element={
-              isAuthenticated ?
-                <Navigate to="/dashboard" replace /> :
+              isAuthenticated ? (
+                <Navigate to="/dashboard" replace />
+              ) : (
                 <Login onLogin={handleLogin} />
+              )
             }
           />
           <Route
             path="/"
             element={
-              isAuthenticated ?
-                <Layout onLogout={handleLogout} /> :
+              isAuthenticated ? (
+                <Layout onLogout={handleLogout} />
+              ) : (
                 <Navigate to="/login" replace />
+              )
             }
           >
             <Route index element={<Navigate to="/dashboard" replace />} />

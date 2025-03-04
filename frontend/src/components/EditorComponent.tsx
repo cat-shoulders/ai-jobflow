@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import {
   toolbarPlugin,
   KitchenSinkToolbar,
@@ -14,9 +14,8 @@ import {
   diffSourcePlugin,
   markdownShortcutPlugin,
   MDXEditor,
-} from "@mdxeditor/editor";
-import '@mdxeditor/editor/style.css'
-
+} from '@mdxeditor/editor';
+import '@mdxeditor/editor/style.css';
 
 const allPlugins = (diffMarkdown: string) => [
   toolbarPlugin({ toolbarContents: () => <KitchenSinkToolbar /> }),
@@ -26,9 +25,9 @@ const allPlugins = (diffMarkdown: string) => [
   linkDialogPlugin(),
   thematicBreakPlugin(),
   frontmatterPlugin(),
-  codeBlockPlugin({ defaultCodeBlockLanguage: "txt" }),
+  codeBlockPlugin({ defaultCodeBlockLanguage: 'txt' }),
   directivesPlugin({ directiveDescriptors: [AdmonitionDirectiveDescriptor] }),
-  diffSourcePlugin({ viewMode: "rich-text", diffMarkdown }),
+  diffSourcePlugin({ viewMode: 'rich-text', diffMarkdown }),
   markdownShortcutPlugin(),
 ];
 

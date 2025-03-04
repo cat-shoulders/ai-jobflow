@@ -1,7 +1,7 @@
-import { useState, useRef } from "react";
-import { Button } from "@/components/ui/button";
-import { Upload, FileText, Loader2 } from "lucide-react";
-import { PDFViewer } from "./PDFViewer";
+import { useState, useRef } from 'react';
+import { Button } from '@/components/ui/button';
+import { Upload, FileText, Loader2 } from 'lucide-react';
+import { PDFViewer } from './PDFViewer';
 
 interface PDFUploadPanelProps {
   onFileUpload: (file: File) => void;
@@ -9,7 +9,11 @@ interface PDFUploadPanelProps {
   isUploading: boolean;
 }
 
-export function PDFUploadPanel({ onFileUpload, onTextAvailable, isUploading }: PDFUploadPanelProps) {
+export function PDFUploadPanel({
+  onFileUpload,
+  onTextAvailable,
+  isUploading,
+}: PDFUploadPanelProps) {
   const [dragActive, setDragActive] = useState(false);
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -17,9 +21,9 @@ export function PDFUploadPanel({ onFileUpload, onTextAvailable, isUploading }: P
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    if (e.type === "dragenter" || e.type === "dragover") {
+    if (e.type === 'dragenter' || e.type === 'dragover') {
       setDragActive(true);
-    } else if (e.type === "dragleave") {
+    } else if (e.type === 'dragleave') {
       setDragActive(false);
     }
   };
@@ -30,7 +34,7 @@ export function PDFUploadPanel({ onFileUpload, onTextAvailable, isUploading }: P
     setDragActive(false);
 
     const files = e.dataTransfer.files;
-    if (files?.[0]?.type === "application/pdf") {
+    if (files?.[0]?.type === 'application/pdf') {
       handleFileSelection(files[0]);
     }
   };
@@ -50,7 +54,7 @@ export function PDFUploadPanel({ onFileUpload, onTextAvailable, isUploading }: P
   };
 
   const handleTextSelect = (text: string) => {
-    console.log("Selected text:", text);
+    console.log('Selected text:', text);
     // Here you can implement your suggestion logic
     // For example, show a popup with suggested edits
   };
@@ -60,13 +64,19 @@ export function PDFUploadPanel({ onFileUpload, onTextAvailable, isUploading }: P
   };
 
   if (pdfUrl) {
-    return <PDFViewer onTextAvailable={onTextAvailable} pdfUrl={pdfUrl} onTextSelect={handleTextSelect} />;
+    return (
+      <PDFViewer
+        onTextAvailable={onTextAvailable}
+        pdfUrl={pdfUrl}
+        onTextSelect={handleTextSelect}
+      />
+    );
   }
 
   return (
     <div
       className={`flex flex-col items-center justify-center h-full border-2 border-dashed rounded-lg p-6 transition-colors
-        ${dragActive ? "border-blue-500 bg-blue-50" : "border-gray-300"}`}
+        ${dragActive ? 'border-blue-500 bg-blue-50' : 'border-gray-300'}`}
       onDragEnter={handleDrag}
       onDragLeave={handleDrag}
       onDragOver={handleDrag}
@@ -90,11 +100,7 @@ export function PDFUploadPanel({ onFileUpload, onTextAvailable, isUploading }: P
         </p>
       </div>
 
-      <Button
-        onClick={handleButtonClick}
-        disabled={isUploading}
-        className="pointer"
-      >
+      <Button onClick={handleButtonClick} disabled={isUploading} className="pointer">
         {isUploading ? (
           <>
             <Loader2 className="h-4 w-4 animate-spin mr-2" />

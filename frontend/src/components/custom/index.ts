@@ -1,2 +1,2 @@
 export * from './ScoreSummaryCard';
-export * from './Gauge'; 
+export * from './Gauge';

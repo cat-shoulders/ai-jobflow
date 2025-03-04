@@ -12,19 +12,10 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle
+  CardTitle,
 } from '@/components/ui/card';
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger
-} from '@/components/ui/tabs';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage
-} from '@/components/ui/avatar';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import {
   Briefcase,
@@ -34,7 +25,7 @@ import {
   MapPin,
   Phone,
   Plus,
-  User
+  User,
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
@@ -116,28 +107,36 @@ export default function Profile() {
                       <Label htmlFor="fullName">Full Name</Label>
                       <Input id="fullName" {...register('fullName')} />
                       {errors.fullName && (
-                        <p className="text-sm text-destructive">{errors.fullName.message}</p>
+                        <p className="text-sm text-destructive">
+                          {errors.fullName.message}
+                        </p>
                       )}
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="email">Email</Label>
                       <Input id="email" type="email" {...register('email')} />
                       {errors.email && (
-                        <p className="text-sm text-destructive">{errors.email.message}</p>
+                        <p className="text-sm text-destructive">
+                          {errors.email.message}
+                        </p>
                       )}
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="phone">Phone</Label>
                       <Input id="phone" {...register('phone')} />
                       {errors.phone && (
-                        <p className="text-sm text-destructive">{errors.phone.message}</p>
+                        <p className="text-sm text-destructive">
+                          {errors.phone.message}
+                        </p>
                       )}
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="location">Location</Label>
                       <Input id="location" {...register('location')} />
                       {errors.location && (
-                        <p className="text-sm text-destructive">{errors.location.message}</p>
+                        <p className="text-sm text-destructive">
+                          {errors.location.message}
+                        </p>
                       )}
                     </div>
                     <div className="space-y-2">
@@ -159,7 +158,10 @@ export default function Profile() {
                   <div className="space-y-6">
                     <div className="flex justify-center">
                       <Avatar className="h-24 w-24">
-                        <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Profile" />
+                        <AvatarImage
+                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                          alt="Profile"
+                        />
                         <AvatarFallback>AJ</AvatarFallback>
                       </Avatar>
                     </div>
@@ -184,8 +186,9 @@ export default function Profile() {
                     <div>
                       <h3 className="text-sm font-medium mb-2">Bio</h3>
                       <p className="text-sm text-muted-foreground">
-                        Senior software developer with 8+ years of experience in full-stack development.
-                        Passionate about creating user-friendly applications and solving complex problems.
+                        Senior software developer with 8+ years of experience in
+                        full-stack development. Passionate about creating
+                        user-friendly applications and solving complex problems.
                       </p>
                     </div>
                   </div>
@@ -196,9 +199,7 @@ export default function Profile() {
             <Card className="md:col-span-1">
               <CardHeader>
                 <CardTitle>Work Experience</CardTitle>
-                <CardDescription>
-                  Your professional experience
-                </CardDescription>
+                <CardDescription>Your professional experience</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="space-y-2">
@@ -207,12 +208,15 @@ export default function Profile() {
                       <Building className="h-4 w-4 text-muted-foreground" />
                       <h3 className="text-sm font-medium">Senior Developer</h3>
                     </div>
-                    <span className="text-xs text-muted-foreground">2022 - Present</span>
+                    <span className="text-xs text-muted-foreground">
+                      2022 - Present
+                    </span>
                   </div>
                   <p className="text-sm">TechCorp Inc.</p>
                   <p className="text-xs text-muted-foreground">
-                    Led development of multiple web applications using React, Node.js, and AWS.
-                    Managed a team of 5 developers and implemented CI/CD pipelines.
+                    Led development of multiple web applications using React,
+                    Node.js, and AWS. Managed a team of 5 developers and implemented
+                    CI/CD pipelines.
                   </p>
                 </div>
                 <div className="space-y-2">
@@ -221,12 +225,15 @@ export default function Profile() {
                       <Building className="h-4 w-4 text-muted-foreground" />
                       <h3 className="text-sm font-medium">Full Stack Developer</h3>
                     </div>
-                    <span className="text-xs text-muted-foreground">2019 - 2022</span>
+                    <span className="text-xs text-muted-foreground">
+                      2019 - 2022
+                    </span>
                   </div>
                   <p className="text-sm">Innovate Solutions</p>
                   <p className="text-xs text-muted-foreground">
-                    Developed and maintained multiple client projects using React, TypeScript, and Node.js.
-                    Implemented responsive designs and optimized application performance.
+                    Developed and maintained multiple client projects using React,
+                    TypeScript, and Node.js. Implemented responsive designs and
+                    optimized application performance.
                   </p>
                 </div>
                 <div className="space-y-2">
@@ -235,12 +242,15 @@ export default function Profile() {
                       <Building className="h-4 w-4 text-muted-foreground" />
                       <h3 className="text-sm font-medium">Frontend Developer</h3>
                     </div>
-                    <span className="text-xs text-muted-foreground">2017 - 2019</span>
+                    <span className="text-xs text-muted-foreground">
+                      2017 - 2019
+                    </span>
                   </div>
                   <p className="text-sm">WebFront</p>
                   <p className="text-xs text-muted-foreground">
-                    Created responsive web interfaces using HTML, CSS, and JavaScript.
-                    Collaborated with designers to implement UI/UX improvements.
+                    Created responsive web interfaces using HTML, CSS, and
+                    JavaScript. Collaborated with designers to implement UI/UX
+                    improvements.
                   </p>
                 </div>
               </CardContent>
@@ -332,9 +342,7 @@ export default function Profile() {
           <Card>
             <CardHeader>
               <CardTitle>Resume</CardTitle>
-              <CardDescription>
-                Manage your resume and cover letters
-              </CardDescription>
+              <CardDescription>Manage your resume and cover letters</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="flex items-center justify-between p-4 border rounded-md">
@@ -344,12 +352,18 @@ export default function Profile() {
                   </div>
                   <div>
                     <h3 className="font-medium">Alex_Johnson_Resume.pdf</h3>
-                    <p className="text-sm text-muted-foreground">Updated 2 weeks ago</p>
+                    <p className="text-sm text-muted-foreground">
+                      Updated 2 weeks ago
+                    </p>
                   </div>
                 </div>
                 <div className="flex gap-2">
-                  <Button variant="outline" size="sm">Preview</Button>
-                  <Button variant="outline" size="sm">Replace</Button>
+                  <Button variant="outline" size="sm">
+                    Preview
+                  </Button>
+                  <Button variant="outline" size="sm">
+                    Replace
+                  </Button>
                 </div>
               </div>
 
@@ -360,12 +374,18 @@ export default function Profile() {
                   </div>
                   <div>
                     <h3 className="font-medium">General_Cover_Letter.pdf</h3>
-                    <p className="text-sm text-muted-foreground">Updated 1 month ago</p>
+                    <p className="text-sm text-muted-foreground">
+                      Updated 1 month ago
+                    </p>
                   </div>
                 </div>
                 <div className="flex gap-2">
-                  <Button variant="outline" size="sm">Preview</Button>
-                  <Button variant="outline" size="sm">Replace</Button>
+                  <Button variant="outline" size="sm">
+                    Preview
+                  </Button>
+                  <Button variant="outline" size="sm">
+                    Replace
+                  </Button>
                 </div>
               </div>
 
@@ -376,12 +396,18 @@ export default function Profile() {
                   </div>
                   <div>
                     <h3 className="font-medium">TechCorp_Cover_Letter.pdf</h3>
-                    <p className="text-sm text-muted-foreground">Updated 2 days ago</p>
+                    <p className="text-sm text-muted-foreground">
+                      Updated 2 days ago
+                    </p>
                   </div>
                 </div>
                 <div className="flex gap-2">
-                  <Button variant="outline" size="sm">Preview</Button>
-                  <Button variant="outline" size="sm">Replace</Button>
+                  <Button variant="outline" size="sm">
+                    Preview
+                  </Button>
+                  <Button variant="outline" size="sm">
+                    Replace
+                  </Button>
                 </div>
               </div>
             </CardContent>

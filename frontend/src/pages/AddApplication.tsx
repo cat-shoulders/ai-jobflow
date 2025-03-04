@@ -1,5 +1,10 @@
-import {Accordion, AccordionItem, AccordionTrigger, AccordionContent} from "@/components/ui/accordion.tsx";
-import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs.tsx";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from '@/components/ui/accordion.tsx';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.tsx';
 import {
   LucideCheckCircle2,
   FileUp,
@@ -8,44 +13,45 @@ import {
   BarChart,
   ChevronLeft,
   ChevronRight,
-  Loader2, FileText
-} from "lucide-react";
-import {lazy, Suspense, useState, useEffect, useRef} from "react";
-import { PDFUploadPanel } from "@/components/PDFUploadPanel";
-import {Textarea} from "@/components/ui/textarea.tsx";
-import {Button} from "@/components/ui/button.tsx";
-import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card.tsx";
-import type { CategoryResult } from "@/types/analysis";
-import { JobDescriptionPanel } from "@/components/JobDescriptionPanel";
-import { AnalysisResults } from "@/components/AnalysisResults";
+  Loader2,
+  FileText,
+} from 'lucide-react';
+import { lazy, Suspense, useState, useEffect, useRef } from 'react';
+import { PDFUploadPanel } from '@/components/PDFUploadPanel';
+import { Textarea } from '@/components/ui/textarea.tsx';
+import { Button } from '@/components/ui/button.tsx';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.tsx';
+import type { CategoryResult } from '@/types/analysis';
+import { JobDescriptionPanel } from '@/components/JobDescriptionPanel';
+import { AnalysisResults } from '@/components/AnalysisResults';
 
-const EditorComp = lazy(() => import("../components/EditorComponent"));
+const EditorComp = lazy(() => import('../components/EditorComponent'));
 
 export default function AddApplication() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [analyzing, setAnalyzing] = useState(false);
-  const [jobDescription, setJobDescription] = useState("");
-  const [resume, setResume] = useState("");
+  const [jobDescription, setJobDescription] = useState('');
+  const [resume, setResume] = useState('');
   const [analyses, setAnalyses] = useState<CategoryResult[] | null>(null);
   const [mounted, setMounted] = useState(false);
-  const [leftPanelWidth, setLeftPanelWidth] = useState("50%");
+  const [leftPanelWidth, setLeftPanelWidth] = useState('50%');
   const [isResizing, setIsResizing] = useState(false);
-  const [activeTab, setActiveTab] = useState("description");
-  const [editorTab, setEditorTab] = useState("upload");
+  const [activeTab, setActiveTab] = useState('description');
+  const [editorTab, setEditorTab] = useState('upload');
   const [isUploading, setIsUploading] = useState(false);
   const dividerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
-    const authToken = localStorage.getItem("authToken");
+    const authToken = localStorage.getItem('authToken');
     setIsAuthenticated(!!authToken);
   }, []);
 
   useEffect(() => {
     if (mounted && isAuthenticated) {
-      const storedJobDescription = localStorage.getItem("jobDescription");
-      const storedResume = localStorage.getItem("resume");
-      const storedAnalyses = localStorage.getItem("analyses");
+      const storedJobDescription = localStorage.getItem('jobDescription');
+      const storedResume = localStorage.getItem('resume');
+      const storedAnalyses = localStorage.getItem('analyses');
 
       if (storedJobDescription) setJobDescription(storedJobDescription);
       if (storedResume) setResume(storedResume);
@@ -55,9 +61,9 @@ export default function AddApplication() {
 
   useEffect(() => {
     if (mounted && isAuthenticated) {
-      localStorage.setItem("jobDescription", jobDescription);
-      localStorage.setItem("resume", resume);
-      localStorage.setItem("analyses", JSON.stringify(analyses));
+      localStorage.setItem('jobDescription', jobDescription);
+      localStorage.setItem('resume', resume);
+      localStorage.setItem('analyses', JSON.stringify(analyses));
     }
   }, [jobDescription, resume, analyses, mounted, isAuthenticated]);
 
@@ -70,13 +76,12 @@ export default function AddApplication() {
       // 3. Update the editor content with the processed text
 
       // For now, we'll just simulate a delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
       // TODO: Implement actual PDF processing
-      console.log("Processing PDF:", file.name);
-
+      console.log('Processing PDF:', file.name);
     } catch (error) {
-      console.error("Error processing PDF:", error);
+      console.error('Error processing PDF:', error);
     } finally {
       setIsUploading(false);
     }
@@ -84,17 +89,17 @@ export default function AddApplication() {
 
   const runAnalysis = async () => {
     if (!jobDescription || !resume) {
-      alert("Please enter both job description and resume");
+      alert('Please enter both job description and resume');
       return;
     }
 
     setAnalyzing(true);
     try {
-      const authToken = localStorage.getItem("authToken");
-      const res = await fetch(import.meta.env.VITE_API_URL + "/api/analyze", {
-        method: "POST",
+      const authToken = localStorage.getItem('authToken');
+      const res = await fetch(import.meta.env.VITE_API_URL + '/api/analyze', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization: `Basic ${authToken}`,
         },
         body: JSON.stringify({
@@ -110,9 +115,9 @@ export default function AddApplication() {
 
       const data = await res.json();
       setAnalyses(data);
-      setActiveTab("analysis");
+      setActiveTab('analysis');
     } catch (e) {
-      alert("An error occurred. Please try again.");
+      alert('An error occurred. Please try again.');
       console.error(e);
     } finally {
       setAnalyzing(false);
@@ -138,19 +143,16 @@ export default function AddApplication() {
 
   useEffect(() => {
     if (isResizing) {
-      window.addEventListener("mousemove", handleMouseMove as any);
-      window.addEventListener("mouseup", handleMouseUp);
+      window.addEventListener('mousemove', handleMouseMove as any);
+      window.addEventListener('mouseup', handleMouseUp);
     }
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove as any);
-      window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener('mousemove', handleMouseMove as any);
+      window.removeEventListener('mouseup', handleMouseUp);
     };
   }, [isResizing]);
 
-
-
   return (
-
     <div className="h-screen bg-gray-50">
       {analyzing && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center">
@@ -170,7 +172,7 @@ export default function AddApplication() {
           className="w-full h-full bg-white shadow-lg "
           style={{ width: leftPanelWidth }}
         >
-          <Tabs defaultValue="upload" >
+          <Tabs defaultValue="upload">
             <Card className="h-full border-0">
               <CardHeader className="pb-4">
                 <CardTitle className="flex items-center">
@@ -178,21 +180,19 @@ export default function AddApplication() {
                   Resume Editor
                 </CardTitle>
 
-                <TabsList className="mt-4" >
-                  <TabsTrigger value="upload" onClick={() => setEditorTab("upload")}>
+                <TabsList className="mt-4">
+                  <TabsTrigger value="upload" onClick={() => setEditorTab('upload')}>
                     <FileUp className="h-4 w-4" />
                     Upload PDF
                   </TabsTrigger>
-                  <TabsTrigger value="editor" onClick={() => setEditorTab("editor")}>
+                  <TabsTrigger value="editor" onClick={() => setEditorTab('editor')}>
                     <PenLine className="h-4 w-4" />
                     Text Editor
                   </TabsTrigger>
                 </TabsList>
-
               </CardHeader>
               <CardContent className="h-[calc(100%-5rem)] overflow-auto">
-
-                {editorTab === "editor" ? (
+                {editorTab === 'editor' ? (
                   <Suspense fallback={<div>Loading...</div>}>
                     <EditorComp markdown={resume} setMarkdown={setResume} />
                   </Suspense>
@@ -238,19 +238,13 @@ export default function AddApplication() {
                     <Briefcase className="h-4 w-4" />
                     Job Description
                   </TabsTrigger>
-                  <TabsTrigger
-                    value="analysis"
-                    className="flex items-center gap-2"
-                  >
+                  <TabsTrigger value="analysis" className="flex items-center gap-2">
                     <BarChart className="h-4 w-4" />
                     Analysis Results
                   </TabsTrigger>
                 </TabsList>
 
-                <TabsContent
-                  value="description"
-                  className="h-[calc(100%-3rem)]"
-                >
+                <TabsContent value="description" className="h-[calc(100%-3rem)]">
                   <JobDescriptionPanel
                     jobDescription={jobDescription}
                     setJobDescription={setJobDescription}
@@ -274,33 +268,37 @@ export default function AddApplication() {
     <div>
       <h1 className="text-3xl font-bold tracking-tight">Add Application</h1>
       <p className="text-muted-foreground">
-        Check your resume and cover letter against the job description to ensure it matches.
+        Check your resume and cover letter against the job description to ensure it
+        matches.
       </p>
       <div className="space-y-4" />
       <Accordion type="single" collapsible>
         <AccordionItem value="1" className="border-b">
           <AccordionTrigger>
             <div className="flex gap-2 items-center">
-              {!!resume && <div><LucideCheckCircle2 className="text-green-500 h-4 w-4" /></div>}
+              {!!resume && (
+                <div>
+                  <LucideCheckCircle2 className="text-green-500 h-4 w-4" />
+                </div>
+              )}
               1. Your Resume
             </div>
           </AccordionTrigger>
           <AccordionContent className="border border-gray-100 rounded-md p-4">
             <Tabs className="mb-4" defaultValue="upload">
-              <TabsList  >
-                <TabsTrigger value="upload" onClick={() => setEditorTab("upload")}>
+              <TabsList>
+                <TabsTrigger value="upload" onClick={() => setEditorTab('upload')}>
                   <FileUp className="h-4 w-4" />
                   Upload PDF
                 </TabsTrigger>
-                <TabsTrigger value="editor" onClick={() => setEditorTab("editor")}>
+                <TabsTrigger value="editor" onClick={() => setEditorTab('editor')}>
                   <PenLine className="h-4 w-4" />
                   Text Editor
                 </TabsTrigger>
               </TabsList>
             </Tabs>
 
-
-            {editorTab === "editor" ? (
+            {editorTab === 'editor' ? (
               <Suspense fallback={<div>Loading...</div>}>
                 <EditorComp markdown={resume} setMarkdown={setResume} />
               </Suspense>

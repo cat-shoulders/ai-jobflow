@@ -10,4 +10,4 @@ export interface MetricResult {
 export interface CategoryResult {
   category: string;
   metrics: MetricResult[];
-} 
+}

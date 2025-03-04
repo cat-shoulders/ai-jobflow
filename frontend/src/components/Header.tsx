@@ -4,16 +4,10 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger
+  DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import {
-  Briefcase, ChevronRight,
-  Menu,
-  Moon,
-  Sun,
-  User
-} from 'lucide-react';
-import {useLocation, useNavigate} from "react-router-dom";
+import { Briefcase, ChevronRight, Menu, Moon, Sun, User } from 'lucide-react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 interface HeaderProps {
   onLogout: () => void;
@@ -21,7 +15,11 @@ interface HeaderProps {
   sidebarOpen: boolean;
 }
 
-export default function Header({ onLogout, onToggleSidebar, sidebarOpen }: HeaderProps) {
+export default function Header({
+  onLogout,
+  onToggleSidebar,
+  sidebarOpen,
+}: HeaderProps) {
   const { theme, setTheme } = useTheme();
   const location = useLocation();
   const navigate = useNavigate();
@@ -31,21 +29,31 @@ export default function Header({ onLogout, onToggleSidebar, sidebarOpen }: Heade
   return (
     <header className="sticky top-0 z-10 flex h-14 items-center gap-4 border-b bg-background px-4 sm:px-6">
       <div className="flex items-center">
-        <Button onClick={() => {
-          navigate('/');
-        }} size="sm" variant="link" className="flex items-center gap-2">
+        <Button
+          onClick={() => {
+            navigate('/');
+          }}
+          size="sm"
+          variant="link"
+          className="flex items-center gap-2"
+        >
           <Briefcase className="h-5 w-5" />
           <span className="font-semibold">JH</span>
         </Button>
         {breadcrumbs.map((breadcrumb, index) => (
           <>
             <ChevronRight className="h-4 w-4" />
-            <Button onClick={() => {
-              if (index === breadcrumbs.length - 1) {
-                return;
-              }
-              navigate(breadcrumbs.slice(0, index + 1).join('/'));
-            }} size="sm" variant="link" key={index} >
+            <Button
+              onClick={() => {
+                if (index === breadcrumbs.length - 1) {
+                  return;
+                }
+                navigate(breadcrumbs.slice(0, index + 1).join('/'));
+              }}
+              size="sm"
+              variant="link"
+              key={index}
+            >
               {breadcrumb.charAt(0).toUpperCase() + breadcrumb.slice(1)}
             </Button>
           </>
@@ -53,7 +61,12 @@ export default function Header({ onLogout, onToggleSidebar, sidebarOpen }: Heade
       </div>
 
       {!sidebarOpen && (
-        <Button variant="ghost" size="icon" onClick={onToggleSidebar} className="md:hidden">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={onToggleSidebar}
+          className="md:hidden"
+        >
           <Menu className="h-5 w-5" />
         </Button>
       )}

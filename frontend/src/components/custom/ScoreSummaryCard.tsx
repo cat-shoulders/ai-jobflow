@@ -1,4 +1,4 @@
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from '@/components/ui/card';
 
 interface ScoreSummaryCardProps {
   score: number;
@@ -15,4 +15,4 @@ export function ScoreSummaryCard({ score }: ScoreSummaryCardProps) {
       </CardContent>
     </Card>
   );
-} 
+}

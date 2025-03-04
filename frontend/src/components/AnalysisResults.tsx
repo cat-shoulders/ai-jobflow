@@ -1,10 +1,10 @@
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { BarChart } from "lucide-react";
-import { ScoreSummaryCard, Gauge } from "@/components/custom";
-import { CategoryResult, MetricResult } from "@/types/analysis";
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+import { BarChart } from 'lucide-react';
+import { ScoreSummaryCard, Gauge } from '@/components/custom';
+import { CategoryResult, MetricResult } from '@/types/analysis';
 
 interface AnalysisResultsProps {
   analyses: CategoryResult[] | null;
@@ -12,22 +12,24 @@ interface AnalysisResultsProps {
 
 export function AnalysisResults({ analyses }: AnalysisResultsProps) {
   const getScoreColor = (score: number) => {
-    if (score >= 80) return "bg-green-100 text-green-800";
-    if (score >= 60) return "bg-yellow-100 text-yellow-800";
-    return "bg-red-100 text-red-800";
+    if (score >= 80) return 'bg-green-100 text-green-800';
+    if (score >= 60) return 'bg-yellow-100 text-yellow-800';
+    return 'bg-red-100 text-red-800';
   };
 
   const calculateAverageScore = (metrics: MetricResult[]) => {
     return Math.round(
-      metrics.reduce((acc, metric) => acc + metric.result.score, 0) / metrics.length
+      metrics.reduce((acc, metric) => acc + metric.result.score, 0) / metrics.length,
     );
   };
 
   const calculateOverallAverage = (analyses: CategoryResult[] | null) => {
     if (!analyses) return 0;
     return Math.round(
-      analyses.reduce((acc, category) => acc + calculateAverageScore(category.metrics), 0) /
-        analyses.length
+      analyses.reduce(
+        (acc, category) => acc + calculateAverageScore(category.metrics),
+        0,
+      ) / analyses.length,
     );
   };
 
@@ -36,7 +38,7 @@ export function AnalysisResults({ analyses }: AnalysisResultsProps) {
       {analyses && (
         <div className="space-y-6">
           <ScoreSummaryCard score={calculateOverallAverage(analyses)} />
-          
+
           {analyses.map((category, index) => (
             <Card key={index} className="overflow-hidden">
               <CardHeader className="pb-4">
@@ -45,7 +47,7 @@ export function AnalysisResults({ analyses }: AnalysisResultsProps) {
                   {category.category}
                   <Badge
                     className={`ml-auto ${getScoreColor(
-                      calculateAverageScore(category.metrics)
+                      calculateAverageScore(category.metrics),
                     )}`}
                   >
                     {calculateAverageScore(category.metrics)}%
@@ -67,7 +69,9 @@ export function AnalysisResults({ analyses }: AnalysisResultsProps) {
                       <p className="text-sm text-gray-600">{metric.result.reason}</p>
                       {metric.result.tips.length > 0 && (
                         <div className="mt-2">
-                          <h5 className="text-sm font-medium mb-1">Improvement Tips:</h5>
+                          <h5 className="text-sm font-medium mb-1">
+                            Improvement Tips:
+                          </h5>
                           <ul className="list-disc list-inside text-sm text-gray-600 space-y-1">
                             {metric.result.tips.map((tip, tIndex) => (
                               <li key={tIndex}>{tip}</li>
@@ -85,4 +89,4 @@ export function AnalysisResults({ analyses }: AnalysisResultsProps) {
       )}
     </ScrollArea>
   );
-} 
+}

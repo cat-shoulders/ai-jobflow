@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button";
-import { BarChart, Loader2 } from "lucide-react";
-import {Textarea} from "@/components/ui/textarea.tsx";
+import { Button } from '@/components/ui/button';
+import { BarChart, Loader2 } from 'lucide-react';
+import { Textarea } from '@/components/ui/textarea.tsx';
 
 interface JobDescriptionPanelProps {
   jobDescription: string;
