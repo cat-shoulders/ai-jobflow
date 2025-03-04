@@ -73,7 +73,7 @@ export default function Login({ onLogin }: LoginProps) {
         },
         onSuccess: async (data) => {
           console.log('Logged in', data);
-          localStorage.setItem('authToken', data.token);
+          localStorage.setItem('authToken', data.data.token);
           localStorage.setItem('userEmail', email);
           toast({
             title: 'Login successful',
