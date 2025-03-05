@@ -12,11 +12,28 @@ export const auth = betterAuth({
   }),
   emailAndPassword: {
     enabled: true,
+    sendResetPassword: async ({ user, url, token }, request) => {
+      console.log(user, url, token);
+      // await sendEmail({
+      //   to: user.email,
+      //   subject: 'Reset your password',
+      //   text: `Click the link to reset your password: ${url}`,
+      // });
+    },
   },
   socialProviders: {
     github: {
       clientId: process.env.GITHUB_CLIENT_ID!,
       clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+    },
+  },
+  emailVerification: {
+    sendVerificationEmail: async ({ user, url, token }, request) => {
+      // await sendEmail({
+      //   to: user.email,
+      //   subject: 'Verify your email address',
+      //   text: `Click the link to verify your email: ${url}`,
+      // });
     },
   },
 });
