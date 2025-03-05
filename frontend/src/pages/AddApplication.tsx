@@ -170,7 +170,7 @@ export default function AddApplication() {
 
       <div className="flex h-full">
         <div
-          className="w-full h-full bg-white shadow-lg "
+          className="w-full h-full bg-white shadow-lg dark:bg-black overflow-hidden relative"
           style={{ width: leftPanelWidth }}
         >
           <Tabs defaultValue="upload">
@@ -181,16 +181,24 @@ export default function AddApplication() {
                   Resume Editor
                 </CardTitle>
 
-                <TabsList className="mt-4">
-                  <TabsTrigger value="upload" onClick={() => setEditorTab('upload')}>
-                    <FileUp className="h-4 w-4" />
-                    Upload PDF
-                  </TabsTrigger>
-                  <TabsTrigger value="editor" onClick={() => setEditorTab('editor')}>
-                    <PenLine className="h-4 w-4" />
-                    Text Editor
-                  </TabsTrigger>
-                </TabsList>
+                <div>
+                  <TabsList className="mt-4">
+                    <TabsTrigger
+                      value="upload"
+                      onClick={() => setEditorTab('upload')}
+                    >
+                      <FileUp className="h-4 w-4" />
+                      Upload PDF
+                    </TabsTrigger>
+                    <TabsTrigger
+                      value="editor"
+                      onClick={() => setEditorTab('editor')}
+                    >
+                      <PenLine className="h-4 w-4" />
+                      Text Editor
+                    </TabsTrigger>
+                  </TabsList>
+                </div>
               </CardHeader>
               <CardContent className="h-[calc(100%-5rem)] overflow-auto">
                 {editorTab === 'editor' ? (
