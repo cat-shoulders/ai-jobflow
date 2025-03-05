@@ -5,6 +5,7 @@ import { google } from '@ai-sdk/google';
 import { generateObject } from 'ai';
 import ejs from 'ejs';
 import { Context } from 'hono';
+import { auth } from '@/lib/auth';
 
 interface Data {
   jobDescription: string;
@@ -25,30 +26,9 @@ export async function analyze(context: Context) {
   console.log('Analyzing...!');
   const req = context.req;
   try {
-    const authorizationHeader = req.header('Authorization');
+    const session = await auth.api.getSession({ headers: context.req.raw.headers });
 
-    if (!authorizationHeader) {
-      return context.json({ error: 'Unauthorized' }, 401);
-    }
-
-    const [authType, authToken] = authorizationHeader.split(' ');
-
-    if (authType !== 'Basic' || !authToken) {
-      return context.json({ error: 'Invalid Authorization header' }, 401);
-    }
-
-    const decodedToken = atob(authToken);
-    const [email, password] = decodedToken.split(':');
-
-    const expectedEmail = process.env.AUTH_EMAIL;
-    const expectedPassword = process.env.AUTH_PASSWORD;
-
-    if (!expectedEmail || !expectedPassword) {
-      console.error('Missing authentication environment variables.');
-      return context.json({ error: 'Internal Server Error' }, 500);
-    }
-
-    if (email !== expectedEmail || password !== expectedPassword) {
+    if (!session) {
       return context.json({ error: 'Unauthorized' }, 401);
     }
 
