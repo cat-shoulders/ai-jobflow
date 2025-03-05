@@ -2,14 +2,17 @@ import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { db } from '@/db';
 import * as schema from '@/db/schema';
+import { anonymous } from 'better-auth/plugins';
 
 export const auth = betterAuth({
-  appName: 'AiJobProcessor',
+  appName: 'Ai Job Processor',
+  baseURL: 'http://localhost:5001',
   trustedOrigins: ['http://localhost:5173'],
   database: drizzleAdapter(db, {
     provider: 'pg',
     schema,
   }),
+  plugins: [anonymous()],
   emailAndPassword: {
     enabled: true,
     sendResetPassword: async ({ user, url, token }, request) => {
