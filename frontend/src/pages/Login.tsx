@@ -13,10 +13,12 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Briefcase } from 'lucide-react';
+import { Briefcase, Github } from 'lucide-react';
 import { authClient } from '@/lib/auth-client';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
+import { API_URL } from '@/conf.ts';
+import { Separator } from '@/components/ui/separator.tsx';
 
 const loginSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email address' }),
@@ -77,44 +79,12 @@ export default function Login({ onLogin }: LoginProps) {
         },
       },
     });
+  };
 
-    // setIsLoading(true);
-    //
-    // try {
-    //   const response = await fetch(import.meta.env.VITE_API_URL + '/api/login', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({ email, password }),
-    //   });
-    //
-    //   const data = await response.json();
-    //
-    //   if (response.ok) {
-    //     localStorage.setItem('authToken', data.token);
-    //     localStorage.setItem('userEmail', email);
-    //     toast({
-    //       title: 'Login successful',
-    //       description: 'Welcome back to JobHunter!',
-    //     });
-    //     onLogin();
-    //   } else {
-    //     toast({
-    //       title: 'Login failed',
-    //       description: data.message || 'Login failed',
-    //     });
-    //   }
-    // } catch (e) {
-    //   toast({
-    //     title: 'Error!',
-    //     description: 'An error occurred. Please try again.',
-    //     variant: 'destructive',
-    //   });
-    //   console.error(e);
-    // } finally {
-    //   setIsLoading(false);
-    // }
+  const handleLoginGithub = async () => {
+    const data = await signIn.social({
+      provider: 'github',
+    });
   };
 
   return (
@@ -160,6 +130,20 @@ export default function Login({ onLogin }: LoginProps) {
             <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading ? 'Signing in...' : 'Sign in'}
             </Button>
+
+            <Separator className="my-5" />
+
+            <div className="flex items-center gap-2">
+              <Button
+                className="bg-black hover:bg-black/80 text-white"
+                type="button"
+                onClick={handleLoginGithub}
+                variant="default"
+              >
+                <Github className="mr-2 h-4 w-4" />
+                Github
+              </Button>
+            </div>
             <p className="mt-4 text-center text-sm text-muted-foreground">
               Don't have an account?{' '}
               <Button

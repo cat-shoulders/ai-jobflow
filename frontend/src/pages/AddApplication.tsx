@@ -1,12 +1,5 @@
-import {
-  Accordion,
-  AccordionItem,
-  AccordionTrigger,
-  AccordionContent,
-} from '@/components/ui/accordion.tsx';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.tsx';
 import {
-  LucideCheckCircle2,
   FileUp,
   PenLine,
   Briefcase,
@@ -18,8 +11,6 @@ import {
 } from 'lucide-react';
 import { lazy, Suspense, useState, useEffect, useRef } from 'react';
 import { PDFUploadPanel } from '@/components/PDFUploadPanel';
-import { Textarea } from '@/components/ui/textarea.tsx';
-import { Button } from '@/components/ui/button.tsx';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.tsx';
 import type { CategoryResult } from '@/types/analysis';
 import { JobDescriptionPanel } from '@/components/JobDescriptionPanel';
@@ -154,7 +145,7 @@ export default function AddApplication() {
   }, [isResizing]);
 
   return (
-    <div className="h-screen bg-gray-50">
+    <Card className="h-full">
       {analyzing && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center">
           <Card className="w-64">
@@ -170,168 +161,89 @@ export default function AddApplication() {
 
       <div className="flex h-full">
         <div
-          className="w-full h-full bg-white shadow-lg dark:bg-black overflow-hidden relative"
+          className="w-full h-full overflow-hidden relative"
           style={{ width: leftPanelWidth }}
         >
           <Tabs defaultValue="upload">
-            <Card className="h-full border-0">
-              <CardHeader className="pb-4">
-                <CardTitle className="flex items-center">
-                  <FileText className="h-5 w-5" />
-                  Resume Editor
-                </CardTitle>
+            <CardHeader className="pb-4">
+              <CardTitle className="flex items-center">
+                <FileText className="h-5 w-5" />
+                Resume Editor
+              </CardTitle>
 
-                <div>
-                  <TabsList className="mt-4">
-                    <TabsTrigger
-                      value="upload"
-                      onClick={() => setEditorTab('upload')}
-                    >
-                      <FileUp className="h-4 w-4" />
-                      Upload PDF
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="editor"
-                      onClick={() => setEditorTab('editor')}
-                    >
-                      <PenLine className="h-4 w-4" />
-                      Text Editor
-                    </TabsTrigger>
-                  </TabsList>
-                </div>
-              </CardHeader>
-              <CardContent className="h-[calc(100%-5rem)] overflow-auto">
-                {editorTab === 'editor' ? (
-                  <Suspense fallback={<div>Loading...</div>}>
-                    <EditorComp markdown={resume} setMarkdown={setResume} />
-                  </Suspense>
-                ) : (
-                  <PDFUploadPanel
-                    onFileUpload={handleFileUpload}
-                    onTextAvailable={setResume}
-                    isUploading={isUploading}
-                  />
-                )}
-              </CardContent>
-            </Card>
+              <div>
+                <TabsList className="mt-4">
+                  <TabsTrigger value="upload" onClick={() => setEditorTab('upload')}>
+                    <FileUp className="h-4 w-4" />
+                    Upload PDF
+                  </TabsTrigger>
+                  <TabsTrigger value="editor" onClick={() => setEditorTab('editor')}>
+                    <PenLine className="h-4 w-4" />
+                    Text Editor
+                  </TabsTrigger>
+                </TabsList>
+              </div>
+            </CardHeader>
+            <CardContent className="h-[calc(100%-5rem)] overflow-auto">
+              {editorTab === 'editor' ? (
+                <Suspense fallback={<div>Loading...</div>}>
+                  <EditorComp markdown={resume} setMarkdown={setResume} />
+                </Suspense>
+              ) : (
+                <PDFUploadPanel
+                  onFileUpload={handleFileUpload}
+                  onTextAvailable={setResume}
+                  isUploading={isUploading}
+                />
+              )}
+            </CardContent>
           </Tabs>
         </div>
 
         <div
           ref={dividerRef}
-          className="w-1 bg-gray-200 hover:bg-blue-400 transition-colors cursor-col-resize flex items-center justify-center"
+          className="w-1 bg-gray-200 dark:bg-neutral-800 hover:bg-blue-400 transition-colors cursor-col-resize flex items-center justify-center"
           onMouseDown={handleMouseDown}
         >
-          <div className="w-4 h-8 rounded-full bg-gray-300 flex items-center justify-center">
+          <div className="w-4 h-8 rounded-full bg-gray-300 dark:bg-gray-700 flex items-center justify-center">
             <ChevronLeft className="h-4 w-4" />
             <ChevronRight className="h-4 w-4" />
           </div>
         </div>
 
         <div className="flex-1 h-full overflow-hidden">
-          <Card className="h-full border-0">
-            <CardHeader className="pb-4">
-              <CardTitle>Job Analysis Dashboard</CardTitle>
-            </CardHeader>
-            <CardContent className="h-[calc(100%-5rem)]">
-              <Tabs
-                value={activeTab}
-                onValueChange={setActiveTab}
-                className="h-full"
-              >
-                <TabsList className="mb-4">
-                  <TabsTrigger
-                    value="description"
-                    className="flex items-center gap-2"
-                  >
-                    <Briefcase className="h-4 w-4" />
-                    Job Description
-                  </TabsTrigger>
-                  <TabsTrigger value="analysis" className="flex items-center gap-2">
-                    <BarChart className="h-4 w-4" />
-                    Analysis Results
-                  </TabsTrigger>
-                </TabsList>
-
-                <TabsContent value="description" className="h-[calc(100%-3rem)]">
-                  <JobDescriptionPanel
-                    jobDescription={jobDescription}
-                    setJobDescription={setJobDescription}
-                    onAnalyze={runAnalysis}
-                    analyzing={analyzing}
-                  />
-                </TabsContent>
-
-                <TabsContent value="analysis" className="h-[calc(100%-3rem)]">
-                  <AnalysisResults analyses={analyses} />
-                </TabsContent>
-              </Tabs>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    </div>
-  );
-
-  return (
-    <div>
-      <h1 className="text-3xl font-bold tracking-tight">Add Application</h1>
-      <p className="text-muted-foreground">
-        Check your resume and cover letter against the job description to ensure it
-        matches.
-      </p>
-      <div className="space-y-4" />
-      <Accordion type="single" collapsible>
-        <AccordionItem value="1" className="border-b">
-          <AccordionTrigger>
-            <div className="flex gap-2 items-center">
-              {!!resume && (
-                <div>
-                  <LucideCheckCircle2 className="text-green-500 h-4 w-4" />
-                </div>
-              )}
-              1. Your Resume
-            </div>
-          </AccordionTrigger>
-          <AccordionContent className="border border-gray-100 rounded-md p-4">
-            <Tabs className="mb-4" defaultValue="upload">
-              <TabsList>
-                <TabsTrigger value="upload" onClick={() => setEditorTab('upload')}>
-                  <FileUp className="h-4 w-4" />
-                  Upload PDF
+          <CardHeader className="pb-4">
+            <CardTitle>Job Analysis Dashboard</CardTitle>
+          </CardHeader>
+          <CardContent className="h-[calc(100%-5rem)]">
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full">
+              <TabsList className="mb-4">
+                <TabsTrigger value="description" className="flex items-center gap-2">
+                  <Briefcase className="h-4 w-4" />
+                  Job Description
                 </TabsTrigger>
-                <TabsTrigger value="editor" onClick={() => setEditorTab('editor')}>
-                  <PenLine className="h-4 w-4" />
-                  Text Editor
+                <TabsTrigger value="analysis" className="flex items-center gap-2">
+                  <BarChart className="h-4 w-4" />
+                  Analysis Results
                 </TabsTrigger>
               </TabsList>
-            </Tabs>
 
-            {editorTab === 'editor' ? (
-              <Suspense fallback={<div>Loading...</div>}>
-                <EditorComp markdown={resume} setMarkdown={setResume} />
-              </Suspense>
-            ) : (
-              <PDFUploadPanel
-                onFileUpload={handleFileUpload}
-                onTextAvailable={setResume}
-                isUploading={isUploading}
-              />
-            )}
-          </AccordionContent>
-        </AccordionItem>
-        <AccordionItem value="2" className="border-b">
-          <AccordionTrigger>2. Job Description</AccordionTrigger>
-          <AccordionContent>
-            <div className="flex items-center flex-col">
-              <Textarea placeholder="Job Description" rows={5} />
-              <Button variant="outline" className="text-xs">
-                Submit
-              </Button>
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
-    </div>
+              <TabsContent value="description" className="h-[calc(100%-3rem)]">
+                <JobDescriptionPanel
+                  jobDescription={jobDescription}
+                  setJobDescription={setJobDescription}
+                  onAnalyze={runAnalysis}
+                  analyzing={analyzing}
+                />
+              </TabsContent>
+
+              <TabsContent value="analysis" className="h-[calc(100%-3rem)]">
+                <AnalysisResults analyses={analyses} />
+              </TabsContent>
+            </Tabs>
+          </CardContent>
+        </div>
+      </div>
+    </Card>
   );
 }
