@@ -1,10 +1,10 @@
 {
-  "name": "ai-job-processor-backend",
+  "name": "ai-jobflow-backend",
   "license": "MIT",
   "scripts": {
     "dev": "PORT=5001 bun --watch run src/main.ts",
     "start": "bun run src/main.ts",
-    "build": "tsc && cp -r src/data dist",
+    "build": "tsc --project tsconfig.json && cp -r src/data dist",
     "prettier": "prettier . --write",
     "drizzle:generate": "drizzle-kit generate",
     "drizzle:migrate": "drizzle-kit migrate",

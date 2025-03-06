@@ -16,6 +16,7 @@ import type { CategoryResult } from '@/types/analysis';
 import { JobDescriptionPanel } from '@/components/JobDescriptionPanel';
 import { AnalysisResults } from '@/components/AnalysisResults';
 import * as conf from '@/conf';
+import { toast } from 'sonner';
 
 const EditorComp = lazy(() => import('../components/EditorComponent'));
 
@@ -87,12 +88,13 @@ export default function AddApplication() {
 
     setAnalyzing(true);
     try {
-      const authToken = localStorage.getItem('authToken');
+      // const authToken = localStorage.getItem('authToken');
       const res = await fetch(conf.API_URL + '/api/analyze', {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Basic ${authToken}`,
+          // Authorization: `Bearer ${authToken}`,
         },
         body: JSON.stringify({
           jobDescription,
@@ -101,7 +103,11 @@ export default function AddApplication() {
       });
 
       if (res.status === 401) {
-        // handleLogout();
+        toast('Session expired. Please login again to continue.');
+        return;
+      }
+      if (res.status !== 200) {
+        toast('There was an error processing your request. Please try again.');
         return;
       }
 
@@ -109,7 +115,8 @@ export default function AddApplication() {
       setAnalyses(data);
       setActiveTab('analysis');
     } catch (e) {
-      alert('An error occurred. Please try again.');
+      toast('An error occurred. Please try again.');
+
       console.error(e);
     } finally {
       setAnalyzing(false);

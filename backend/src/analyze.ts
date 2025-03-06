@@ -5,7 +5,7 @@ import { google } from '@ai-sdk/google';
 import { generateObject } from 'ai';
 import ejs from 'ejs';
 import { Context } from 'hono';
-import { auth } from '@/lib/auth';
+import { auth } from './lib/auth';
 
 interface Data {
   jobDescription: string;

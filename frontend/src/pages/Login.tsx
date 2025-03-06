@@ -17,7 +17,6 @@ import { Briefcase, Github } from 'lucide-react';
 import { authClient } from '@/lib/auth-client';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-import { API_URL } from '@/conf.ts';
 import { Separator } from '@/components/ui/separator.tsx';
 
 const loginSchema = z.object({
@@ -73,7 +72,7 @@ export default function Login({ onLogin }: LoginProps) {
         onSuccess: async (data) => {
           console.log('Logged in', data);
           localStorage.setItem('authToken', data.data.token);
-          localStorage.setItem('userEmail', email);
+          localStorage.setItem('user', JSON.stringify(data.data.user));
           toast('Login successful');
           onLogin();
         },
@@ -82,7 +81,7 @@ export default function Login({ onLogin }: LoginProps) {
   };
 
   const handleLoginGithub = async () => {
-    const data = await signIn.social({
+    await signIn.social({
       provider: 'github',
     });
   };
@@ -94,7 +93,7 @@ export default function Login({ onLogin }: LoginProps) {
           <div className="flex justify-center mb-2">
             <Briefcase className="h-10 w-10" />
           </div>
-          <CardTitle className="text-2xl font-bold">JobHunter</CardTitle>
+          <CardTitle className="text-2xl font-bold">Job Processor</CardTitle>
           <CardDescription>
             Enter your credentials to access your account
           </CardDescription>

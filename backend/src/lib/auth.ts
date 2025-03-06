@@ -1,7 +1,7 @@
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
-import { db } from '@/db';
-import * as schema from '@/db/schema';
+import { db } from '../db';
+import * as schema from '../db/schema';
 import { anonymous } from 'better-auth/plugins';
 
 export const auth = betterAuth({
@@ -15,14 +15,14 @@ export const auth = betterAuth({
   plugins: [anonymous()],
   emailAndPassword: {
     enabled: true,
-    sendResetPassword: async ({ user, url, token }, request) => {
-      console.log(user, url, token);
-      // await sendEmail({
-      //   to: user.email,
-      //   subject: 'Reset your password',
-      //   text: `Click the link to reset your password: ${url}`,
-      // });
-    },
+    // sendResetPassword: async ({ user, url, token }, request) => {
+    //   console.log(user, url, token);
+    //   await sendEmail({
+    //     to: user.email,
+    //     subject: 'Reset your password',
+    //     text: `Click the link to reset your password: ${url}`,
+    //   });
+    // },
   },
   socialProviders: {
     github: {
@@ -31,12 +31,12 @@ export const auth = betterAuth({
     },
   },
   emailVerification: {
-    sendVerificationEmail: async ({ user, url, token }, request) => {
-      // await sendEmail({
-      //   to: user.email,
-      //   subject: 'Verify your email address',
-      //   text: `Click the link to verify your email: ${url}`,
-      // });
-    },
+    // sendVerificationEmail: async ({ user, url, token }, request) => {
+    //   await sendEmail({
+    //     to: user.email,
+    //     subject: 'Verify your email address',
+    //     text: `Click the link to verify your email: ${url}`,
+    //   });
+    // },
   },
 });

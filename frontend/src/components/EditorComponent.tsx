@@ -44,7 +44,7 @@ export default function EditorComp({
       onChange={setMarkdown}
       className="full-demo-mdxeditor"
       contentEditableClassName="prose max-w-full font-sans"
-      plugins={allPlugins(markdown)}
+      plugins={allPlugins()}
     />
   );
 }
