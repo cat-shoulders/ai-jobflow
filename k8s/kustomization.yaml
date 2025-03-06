@@ -3,14 +3,13 @@ kind: Kustomization
 resources:
   - deployment.yaml
   - service.yaml
-configMapGenerator:
-  - name: ai-jobflow
-    behavior: create
-    literals:
-      - ENV=production
+  - ingress.yaml
+  - middleware.yaml
 images:
   - name: ghcr.io/cat-shoulders/ai-jobflow
     newTag: $(IMAGE_TAG)
+generatorOptions:
+  disableNameSuffixHash: true
 secretGenerator:
-  - name: app-secrets
+  - name: ai-jobflow
     literals: []
