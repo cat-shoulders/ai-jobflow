@@ -59,7 +59,10 @@ jobs:
             org.opencontainers.image.created=${{ env.CURRENT_DATE }}
 
       - name: Update ConfigMap with ENV_ secrets
-        run: ./.github/update-configmap.sh ${{ toJSON(secrets) }}
+        run: |
+          ./.github/update-configmap.sh <<'EOF'
+          ${{ toJSON(secrets) }}
+          EOF
 
       - name: Kubernetes set context
         uses: Azure/k8s-set-context@v4
