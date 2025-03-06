@@ -12,20 +12,9 @@ spec:
   tls:
     - hosts:
         - jobflow.catshoulder.dev
-        - www.jobflow.catshoulder.dev
       secretName: ai-jobflow-tls-v2
   rules:
     - host: jobflow.catshoulder.dev
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: ai-jobflow-service
-                port:
-                  number: 3000
-    - host: www.jobflow.catshoulder.dev
       http:
         paths:
           - path: /
