@@ -1,33 +1,22 @@
 #!/bin/bash
-
-# Script to extract GitHub secrets with ENV_ prefix and add them to kustomization.yaml
-# Handles security concerns by not exposing secrets in logs
-
-# Disable command output to prevent secret exposure
 set +x
+SECRETS_JSON=$1
+[ -z "$SECRETS_JSON" ] && echo "Error: No secrets JSON provided" && exit 1
 
-echo "::group::Processing environment variables"
-echo "Adding ENV_ secrets to ConfigMap..."
+SECRETS_ARRAY=()
+while read key; do
+  value=$(echo "$SECRETS_JSON" | jq -r ".[\"$key\"]")
+  secret_key=$(echo $key | sed 's/^ENV_//')
+  SECRETS_ARRAY+=("$secret_key=$value")
+done < <(echo "$SECRETS_JSON" | jq -r 'keys[] | select(startswith("ENV_"))')
 
-# Create a temp file for the updated literals section
-touch /tmp/literals-temp.txt
-
-# Extract existing literals section (if any)
-if grep -q "literals:" ./k8s/kustomization.yaml; then
-  sed -n '/literals:/,/^[^ ]/p' ./k8s/kustomization.yaml | grep -v "literals:" | grep -v "^[^ ]" >>/tmp/literals-temp.txt
+if ! yq -e '.secretGenerator' ./k8s/kustomization.yaml >/dev/null 2>&1; then
+  yq -i '.secretGenerator = [{"name": "app-secrets", "literals": []}]' ./k8s/kustomization.yaml
 fi
 
-# Get all ENV_ secrets from environment variables (passed in by caller)
-for var in $(env | grep '^ENV_' | cut -d= -f1); do
-  config_key=$(echo "$var" | sed 's/^ENV_//')
-  config_value="${!var}"
-  echo "      - $config_key=$config_value" >>/tmp/literals-temp.txt
+for secret in "${SECRETS_ARRAY[@]}"; do
+  yq -i ".secretGenerator[0].literals += [\"$secret\"]" ./k8s/kustomization.yaml
 done
 
-# Update kustomization.yaml with the new literals section
-sed -i '/literals:/,/^[^ ]/{ /literals:/b; /^[^ ]/b; d }' ./k8s/kustomization.yaml
-sed -i '/literals:/ r /tmp/literals-temp.txt' ./k8s/kustomization.yaml
-
-rm /tmp/literals-temp.txt
-echo "ConfigMap updated with $(grep -c '    - ' ./k8s/kustomization.yaml) environment variables"
-echo "::endgroup::"
+TEMP_ARRAY=$(yq -o=json '.secretGenerator[0].literals' ./k8s/kustomization.yaml | jq -c 'unique')
+yq -i ".secretGenerator[0].literals = $TEMP_ARRAY" ./k8s/kustomization.yaml

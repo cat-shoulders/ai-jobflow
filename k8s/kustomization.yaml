@@ -1,16 +1,16 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-
 resources:
   - deployment.yaml
   - service.yaml
-
 configMapGenerator:
   - name: ai-jobflow
     behavior: create
     literals:
       - ENV=production
-
 images:
   - name: ghcr.io/cat-shoulders/ai-jobflow
     newTag: $(IMAGE_TAG)
+secretGenerator:
+  - name: app-secrets
+    literals: []

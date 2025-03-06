@@ -58,14 +58,8 @@ jobs:
             org.opencontainers.image.revision=${{ github.sha }}
             org.opencontainers.image.created=${{ env.CURRENT_DATE }}
 
-      - name: Export ENV_ secrets as environment variables
-        uses: oNaiPs/secrets-to-env-action@v1
-        with:
-          secrets: ${{ toJSON(secrets) }}
-          include: ENV_*
-
       - name: Update ConfigMap with ENV_ secrets
-        run: ./.github/update-configmap.sh
+        run: ./.github/update-configmap.sh ${{ toJSON(secrets) }}
 
       - name: Kubernetes set context
         uses: Azure/k8s-set-context@v4
