@@ -1,4 +1,4 @@
-FROM oven/bun:latest as base
+FROM oven/bun:latest AS base
 
 WORKDIR /app
 
@@ -6,18 +6,18 @@ COPY package.json bun.lock ./
 COPY frontend/package.json ./frontend/
 COPY backend/package.json ./backend/
 
-RUN bun install --frozen-lockfile --production
+RUN bun install --frozen-lockfile --production --ignore-scripts
 
-FROM base as builder
+FROM base AS builder
 
-RUN bun install --frozen-lockfile
+RUN bun install --frozen-lockfile --ignore-scripts
 
 COPY . .
 
 RUN bun run build
 RUN bun run assemble
 
-FROM oven/bun:slim as production
+FROM oven/bun:slim AS production
 
 WORKDIR /app
 
