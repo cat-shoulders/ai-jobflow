@@ -60,9 +60,7 @@ jobs:
 
       - name: Update ConfigMap with ENV_ secrets
         run: |
-          ./.github/update-configmap.sh <<EOF
-          ${{ toJSON(secrets) }}
-          EOF
+          ./.github/update-configmap.sh '${{ toJSON(secrets) }}'
 
       - name: Kubernetes set context
         uses: Azure/k8s-set-context@v4
