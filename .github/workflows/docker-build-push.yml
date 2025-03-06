@@ -71,10 +71,12 @@ jobs:
 
       - name: Export ENV_ secrets as environment variables
         run: |
-          set +x
+          set +x  # Disable command echo for security
           for secret_name in $(jq -r 'keys[]' <<< '${{ toJSON(secrets) }}' | grep '^ENV_'); do
-            echo "$secret_name=${{ secrets[format('{0}', secret_name)] }}" >> $GITHUB_ENV
-          done
+            echo "$secret_name<<EOF" >> $GITHUB_ENV
+            eval "echo \${{ secrets.$secret_name }}" >> $GITHUB_ENV
+            echo "EOF" >> $GITHUB_ENV
+          done 
 
       - name: Update ConfigMap with ENV_ secrets
         run: ./.github/update-configmap.sh
