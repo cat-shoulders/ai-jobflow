@@ -19,7 +19,9 @@ spec:
           image: ghcr.io/cat-shoulders/ai-jobflow:latest
           ports:
             - containerPort: 3000
-
+          envFrom:
+            - configMapRef:
+                name: ai-jobflow
           livenessProbe:
             httpGet:
               path: /api/health
