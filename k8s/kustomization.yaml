@@ -7,6 +7,10 @@ resources:
 
 configMapGenerator:
   - name: ai-jobflow
-    behavior: merge
+    behavior: create
     literals:
       - ENV=production
+
+images:
+  - name: ghcr.io/cat-shoulders/ai-jobflow
+    newTag: $(IMAGE_TAG)
