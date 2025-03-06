@@ -70,14 +70,10 @@ jobs:
             org.opencontainers.image.created=${{ env.CURRENT_DATE }}
 
       - name: Export ENV_ secrets as environment variables
-        run: |
-          set +x  # Disable command echo for security
-          for secret_name in $(jq -r 'keys[]' <<< '${{ toJSON(secrets) }}' | grep '^ENV_'); do
-            secret_value="${{ secrets[format('{0}', secret_name)] }}"
-            echo "$secret_name<<EOF" >> $GITHUB_ENV
-            echo "$secret_value" >> $GITHUB_ENV
-            echo "EOF" >> $GITHUB_ENV
-          done
+        uses: oNaiPs/secrets-to-env-action@v1
+        with:
+          secrets: ${{ toJSON(secrets) }}
+          prefix: ENV_
 
       - name: Update ConfigMap with ENV_ secrets
         run: ./.github/update-configmap.sh
