@@ -12,11 +12,13 @@ RUN rm glibc-2.26-r1.apk
 # Install Bun
 RUN npm install -g bun
 
-COPY package.json ./
+COPY . ./
 
 RUN bun i
+RUN bun run build
+RUN bun run assemble
 
 COPY . .
 
-CMD ["bun", "dev"]
+CMD ["bun", "run", "dist/main.js"]
 

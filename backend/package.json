@@ -1,5 +1,5 @@
 {
-  "name": "ai-jobflow-backend",
+  "name": "backend",
   "license": "MIT",
   "scripts": {
     "dev": "PORT=5001 bun --watch run src/main.ts",
