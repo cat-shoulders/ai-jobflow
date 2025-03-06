@@ -14,11 +14,11 @@ spec:
       labels:
         app: ai-jobflow
     spec:
+      imagePullSecrets:
+        - name: ghcr-secret
       containers:
         - name: ai-jobflow
           image: ghcr.io/cat-shoulders/ai-jobflow:latest
-          imagePullSecrets:
-            - name: ghcr-secret
           ports:
             - containerPort: 3000
           envFrom:
