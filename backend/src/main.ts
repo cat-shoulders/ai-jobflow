@@ -29,6 +29,11 @@ app.use('*', async (c, next) => {
   );
 });
 
+app.get('/api/health', (c) => {
+  c.status(200);
+  return c.body('Ok');
+});
+
 // Allow cors for API routes
 if (process.env.ENV !== 'production') {
   console.log('CORS enabled for development');
