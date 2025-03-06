@@ -60,7 +60,7 @@ jobs:
 
       - name: Update ConfigMap with ENV_ secrets
         run: |
-          ./.github/update-configmap.sh <<'EOF'
+          ./.github/update-configmap.sh <<EOF
           ${{ toJSON(secrets) }}
           EOF
 
