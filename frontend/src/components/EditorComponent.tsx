@@ -1,34 +1,34 @@
 'use client';
 import {
   toolbarPlugin,
-  KitchenSinkToolbar,
+  UndoRedo,
+  BoldItalicUnderlineToggles,
+  ListsToggle,
   listsPlugin,
-  headingsPlugin,
   linkPlugin,
+  CreateLink,
   linkDialogPlugin,
   thematicBreakPlugin,
-  frontmatterPlugin,
-  codeBlockPlugin,
-  directivesPlugin,
-  AdmonitionDirectiveDescriptor,
-  diffSourcePlugin,
-  markdownShortcutPlugin,
+  DiffSourceToggleWrapper,
   MDXEditor,
 } from '@mdxeditor/editor';
 import '@mdxeditor/editor/style.css';
 
-const allPlugins = (diffMarkdown: string) => [
-  toolbarPlugin({ toolbarContents: () => <KitchenSinkToolbar /> }),
+const allPlugins = () => [
+  toolbarPlugin({
+    toolbarContents: () => (
+      <DiffSourceToggleWrapper>
+        <BoldItalicUnderlineToggles />
+        <UndoRedo />
+        <ListsToggle />
+        <CreateLink />
+      </DiffSourceToggleWrapper>
+    ),
+  }),
   listsPlugin(),
-  headingsPlugin(),
   linkPlugin(),
   linkDialogPlugin(),
   thematicBreakPlugin(),
-  frontmatterPlugin(),
-  codeBlockPlugin({ defaultCodeBlockLanguage: 'txt' }),
-  directivesPlugin({ directiveDescriptors: [AdmonitionDirectiveDescriptor] }),
-  diffSourcePlugin({ viewMode: 'rich-text', diffMarkdown }),
-  markdownShortcutPlugin(),
 ];
 
 export default function EditorComp({
@@ -44,7 +44,7 @@ export default function EditorComp({
       onChange={setMarkdown}
       className="full-demo-mdxeditor"
       contentEditableClassName="prose max-w-full font-sans"
-      plugins={allPlugins(markdown)}
+      plugins={allPlugins()}
     />
   );
 }

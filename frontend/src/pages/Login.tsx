@@ -13,9 +13,11 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Briefcase } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
-import * as conf from '@/conf';
+import { Briefcase, Github } from 'lucide-react';
+import { authClient } from '@/lib/auth-client';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
+import { Separator } from '@/components/ui/separator.tsx';
 
 const loginSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email address' }),
@@ -28,9 +30,11 @@ interface LoginProps {
   onLogin: () => void;
 }
 
+const { signIn } = authClient;
+
 export default function Login({ onLogin }: LoginProps) {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const { toast } = useToast();
 
   const {
     register,
@@ -52,43 +56,34 @@ export default function Login({ onLogin }: LoginProps) {
   }, [onLogin]);
 
   const handleLogin = async ({ email, password }: LoginFormValues) => {
-    setIsLoading(true);
-
-    try {
-      const response = await fetch(conf.API_URL + '/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+    signIn.email({
+      email,
+      password,
+      fetchOptions: {
+        onResponse: () => {
+          setIsLoading(false);
         },
-        body: JSON.stringify({ email, password }),
-      });
+        onRequest: () => {
+          setIsLoading(true);
+        },
+        onError: (ctx) => {
+          toast(ctx.error.message);
+        },
+        onSuccess: async (data) => {
+          console.log('Logged in', data);
+          localStorage.setItem('authToken', data.data.token);
+          localStorage.setItem('user', JSON.stringify(data.data.user));
+          toast('Login successful');
+          onLogin();
+        },
+      },
+    });
+  };
 
-      const data = await response.json();
-
-      if (response.ok) {
-        localStorage.setItem('authToken', data.token);
-        localStorage.setItem('userEmail', email);
-        toast({
-          title: 'Login successful',
-          description: 'Welcome back to JobHunter!',
-        });
-        onLogin();
-      } else {
-        toast({
-          title: 'Login failed',
-          description: data.message || 'Login failed',
-        });
-      }
-    } catch (e) {
-      toast({
-        title: 'Error!',
-        description: 'An error occurred. Please try again.',
-        variant: 'destructive',
-      });
-      console.error(e);
-    } finally {
-      setIsLoading(false);
-    }
+  const handleLoginGithub = async () => {
+    await signIn.social({
+      provider: 'github',
+    });
   };
 
   return (
@@ -98,7 +93,7 @@ export default function Login({ onLogin }: LoginProps) {
           <div className="flex justify-center mb-2">
             <Briefcase className="h-10 w-10" />
           </div>
-          <CardTitle className="text-2xl font-bold">JobHunter</CardTitle>
+          <CardTitle className="text-2xl font-bold">Job Processor</CardTitle>
           <CardDescription>
             Enter your credentials to access your account
           </CardDescription>
@@ -134,9 +129,30 @@ export default function Login({ onLogin }: LoginProps) {
             <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading ? 'Signing in...' : 'Sign in'}
             </Button>
+
+            <Separator className="my-5" />
+
+            <div className="flex items-center gap-2">
+              <Button
+                className="bg-black hover:bg-black/80 text-white"
+                type="button"
+                onClick={handleLoginGithub}
+                variant="default"
+              >
+                <Github className="mr-2 h-4 w-4" />
+                Github
+              </Button>
+            </div>
             <p className="mt-4 text-center text-sm text-muted-foreground">
               Don't have an account?{' '}
-              <Button variant="link" className="h-auto p-0">
+              <Button
+                type="button"
+                onClick={() => {
+                  navigate('/register');
+                }}
+                variant="link"
+                className="h-auto p-0"
+              >
                 Sign up
               </Button>
             </p>

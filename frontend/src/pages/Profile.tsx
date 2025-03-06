@@ -27,7 +27,7 @@ import {
   Plus,
   User,
 } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 
 const profileSchema = z.object({
   fullName: z.string().min(2, { message: 'Name must be at least 2 characters' }),
@@ -41,7 +41,6 @@ type ProfileFormValues = z.infer<typeof profileSchema>;
 
 export default function Profile() {
   const [isEditing, setIsEditing] = useState(false);
-  const { toast } = useToast();
 
   const {
     register,
@@ -60,10 +59,7 @@ export default function Profile() {
 
   const onSubmit = (_data: ProfileFormValues) => {
     // In a real app, you would save this data to your backend
-    toast({
-      title: 'Profile updated',
-      description: 'Your profile has been updated successfully.',
-    });
+    toast('Profile updated');
     setIsEditing(false);
   };
 
