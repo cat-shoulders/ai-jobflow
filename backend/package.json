@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "dotenvx run -f .env.development -- bun --watch run src/main.ts",
     "start": "bun run src/main.ts",
-    "build": "tsc --project tsconfig.json && cp -r src/data drizzle.config.ts dist",
+    "build": "tsc --project tsconfig.json && cp -r src/data dist",
     "prettier": "prettier . --write",
     "drizzle:generate": "drizzle-kit generate",
     "drizzle:migrate": "drizzle-kit migrate",
