@@ -22,6 +22,8 @@ FROM oven/bun:slim AS production
 WORKDIR /app
 
 COPY --from=base /app/node_modules ./node_modules
-COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/dist/ .
 
-CMD ["bun", "run", "dist/main.js"]
+ENTRYPOINT ["bun"]
+
+CMD ["run", "src/main.js"]
