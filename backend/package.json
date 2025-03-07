@@ -16,7 +16,6 @@
     "@libsql/client": "^0.14.0",
     "ai": "^4.1.45",
     "better-auth": "^1.2.2",
-    "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "drizzle-orm": "^0.40.0",
     "ejs": "^3.1.10",
