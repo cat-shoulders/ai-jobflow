@@ -24,6 +24,6 @@ WORKDIR /app
 COPY --from=base /app/node_modules ./node_modules
 COPY --from=builder /app/dist/ .
 
-ENTRYPOINT ["bun"]
+EXPOSE 3000
 
-CMD ["run", "src/main.js"]
+CMD ["bun", "run", "src/main.js"]

@@ -19,7 +19,7 @@ spec:
       initContainers:
         - name: run-migrations
           image: ghcr.io/cat-shoulders/ai-jobflow:latest
-          command: ['drizzle-kit', 'migrate']
+          command: ['bun', 'drizzle-kit', 'migrate']
           env:
             - name: DATABASE_URL
               value: file:/app/data/ai-jobflow.db
