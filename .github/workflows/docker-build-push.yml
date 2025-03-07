@@ -88,4 +88,4 @@ jobs:
         run: kubectl kustomize k8s/ | sed -e "s/\$(IMAGE_TAG)/${{ env.COMMIT_SHA_SHORT }}/g" | kubectl apply -f -
 
       - name: Wait for deployment to complete
-        run: kubectl rollout status deployment/ai-jobflow --timeout=5m
+        run: kubectl rollout status deployment/ai-jobflow --timeout=2m
