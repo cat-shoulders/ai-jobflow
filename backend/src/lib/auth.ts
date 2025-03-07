@@ -9,7 +9,7 @@ export const auth = betterAuth({
   baseURL: 'http://localhost:5001',
   trustedOrigins: ['http://localhost:5173'],
   database: drizzleAdapter(db, {
-    provider: 'pg',
+    provider: 'sqlite',
     schema,
   }),
   plugins: [anonymous()],

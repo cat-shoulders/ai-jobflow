@@ -2,7 +2,7 @@
   "name": "backend",
   "license": "MIT",
   "scripts": {
-    "dev": "PORT=5001 bun --watch run src/main.ts",
+    "dev": "dotenvx run -f .env.development -- bun --watch run src/main.ts",
     "start": "bun run src/main.ts",
     "build": "tsc --project tsconfig.json && cp -r src/data dist",
     "prettier": "prettier . --write",
@@ -12,23 +12,21 @@
   },
   "dependencies": {
     "@ai-sdk/google": "^1.1.16",
-    "@prisma/client": "^6.4.1",
-    "@types/ejs": "^3.1.5",
+    "@dotenvx/dotenvx": "^1.38.4",
+    "@libsql/client": "^0.14.0",
     "ai": "^4.1.45",
     "better-auth": "^1.2.2",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
     "drizzle-orm": "^0.40.0",
     "ejs": "^3.1.10",
     "hono": "^4.2.4",
-    "pg": "^8.13.3",
-    "postgres": "^3.4.5",
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "^7.6.12",
     "@types/bun": "^1.0.12",
-    "@types/pg": "^8.11.11",
+    "@types/ejs": "^3.1.5",
     "drizzle-kit": "^0.30.5",
     "tsx": "^4.19.3"
   }
