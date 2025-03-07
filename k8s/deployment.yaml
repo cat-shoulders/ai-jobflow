@@ -16,6 +16,16 @@ spec:
     spec:
       imagePullSecrets:
         - name: ghcr-secret
+      initContainers:
+        - name: run-migrations
+          image: ghcr.io/cat-shoulders/ai-jobflow:latest
+          command: ['bun', 'drizzle-kit', 'migrate']
+          env:
+            - name: DATABASE_URL
+              value: file:/app/data/ai-jobflow.db
+          volumeMounts:
+            - name: db-storage
+              mountPath: /app/data
       containers:
         - name: ai-jobflow
           image: ghcr.io/cat-shoulders/ai-jobflow:latest
@@ -42,3 +52,13 @@ spec:
           env:
             - name: ENV
               value: production
+            - name: DATABASE_URL
+              value: file:/app/data/ai-jobflow.db
+          volumeMounts:
+            - name: db-storage
+              mountPath: /app/data
+      volumes:
+        - name: db-storage
+          hostPath:
+            path: /var/lib/ai-jobflow-db
+            type: DirectoryOrCreate

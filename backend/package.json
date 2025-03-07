@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "dotenvx run -f .env.development -- bun --watch run src/main.ts",
     "start": "bun run src/main.ts",
-    "build": "tsc --project tsconfig.json && cp -r src/data dist",
+    "build": "tsc --project tsconfig.json && cp -r src/data drizzle.config.ts dist",
     "prettier": "prettier . --write",
     "drizzle:generate": "drizzle-kit generate",
     "drizzle:migrate": "drizzle-kit migrate",
@@ -17,6 +17,7 @@
     "ai": "^4.1.45",
     "better-auth": "^1.2.2",
     "cors": "^2.8.5",
+    "drizzle-kit": "^0.30.5",
     "drizzle-orm": "^0.40.0",
     "ejs": "^3.1.10",
     "hono": "^4.2.4",
@@ -26,7 +27,6 @@
     "@types/better-sqlite3": "^7.6.12",
     "@types/bun": "^1.0.12",
     "@types/ejs": "^3.1.5",
-    "drizzle-kit": "^0.30.5",
     "tsx": "^4.19.3"
   }
 }
