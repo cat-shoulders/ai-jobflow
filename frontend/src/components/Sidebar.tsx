@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -58,7 +58,7 @@ export default function Sidebar({ open, onToggle }: SidebarProps) {
           <div className="px-2 py-4">
             <nav className="flex flex-col gap-1">
               {navItems.map((item) => (
-                <Link
+                <a
                   key={item.href}
                   to={item.href}
                   className={cn(
@@ -70,7 +70,7 @@ export default function Sidebar({ open, onToggle }: SidebarProps) {
                 >
                   {item.icon}
                   {open && <span>{item.title}</span>}
-                </Link>
+                </a>
               ))}
             </nav>
           </div>
